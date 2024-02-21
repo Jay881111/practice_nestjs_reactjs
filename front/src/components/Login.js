@@ -9,7 +9,7 @@ function Login() {
     e.preventDefault();
     await axios
       .post('http://localhost:4000/auth/login/email', {
-        email: userId,
+        userId: userId,
         password: password,
       })
       .then((response) => {

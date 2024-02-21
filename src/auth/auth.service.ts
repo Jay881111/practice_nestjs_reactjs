@@ -5,7 +5,10 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersModel } from 'src/users/entity/users.entity';
 import { ConfigService } from '@nestjs/config';
-import { ENV_JWT_SECRET_KEY } from 'src/common/const/env-keys.const';
+import {
+  ENV_HASH_ROUNDS_KEY,
+  ENV_JWT_SECRET_KEY,
+} from 'src/common/const/env-keys.const';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +19,7 @@ export class AuthService {
   ) {}
 
   extractTokenFromHeader(header: string, isBearer: boolean) {
+    console.log('header', header);
     const splitToken = header.split(' ');
     const prefix = isBearer ? 'Bearer' : 'Basic';
 
@@ -28,8 +32,8 @@ export class AuthService {
 
   decodeBasicToken(base64String: string) {
     const decoded = Buffer.from(base64String, 'base64').toString('utf8');
+    console.log('decoded', decoded);
     const split = decoded.split(':');
-
     if (split.length !== 2) {
       throw new UnauthorizedException('잘못된 유형의 토큰입니다');
     }
@@ -70,13 +74,13 @@ export class AuthService {
     //
   }
   async loginWithEmail(user: Pick<UsersModel, 'email' | 'password'>) {
+    console.log('loginwithemail', user);
     const existingUser = await this.authenticateWithEmailAndPassword(user);
-
     return this.loginUser(existingUser);
   }
 
   loginUser(user: Pick<UsersModel, 'email' | 'id'>) {
-    console.log('loginuser');
+    console.log('loginuser', user);
     return {
       accessToken: this.signToken(user, false),
       refreshToken: this.signToken(user, true),
@@ -84,9 +88,15 @@ export class AuthService {
   }
 
   async registerWithEmail(user: RegisterUserDto) {
-    const hash = await bcrypt.hash(user.password, 10);
-    const newUser = await this.usersService.signUp(user.id, user.email, hash);
-    // return this.usersService.signUp(user.id, user.userId, user.password);
+    const hash = await bcrypt.hash(
+      user.password,
+      parseInt(this.configService.get<string>(ENV_HASH_ROUNDS_KEY)),
+    );
+    const newUser = await this.usersService.createUser({
+      ...user,
+      password: hash,
+    });
+
     return this.loginUser(newUser);
   }
 }
