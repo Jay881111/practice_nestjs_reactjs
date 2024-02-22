@@ -67,7 +67,6 @@ export class AuthService {
       type: isRefreshToken ? 'refresh' : 'access',
     };
     return this.jwtService.sign(payload, {
-      //   secret: 'jhscrt',
       secret: this.configService.get<string>(ENV_JWT_SECRET_KEY),
       expiresIn: isRefreshToken ? 3600 : 300,
     });

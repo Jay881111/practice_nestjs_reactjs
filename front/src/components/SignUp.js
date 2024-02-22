@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
-import bcrypt from 'bcryptjs-react';
 
 function SignUp() {
   const emailInputRef = useRef();
@@ -10,20 +9,31 @@ function SignUp() {
     e.preventDefault();
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
-    const hashedPassword = bcrypt.hashSync(password, 10);
 
-    console.log('id', email, 'password', hashedPassword);
-
-    await axios
-      .post('http://localhost:4000/users/signUp', {
-        userId: email,
-        password: hashedPassword,
-      })
+    await axios({
+      method: 'post',
+      url: 'http://localhost:4000/auth/register/email',
+      data: {
+        email: email,
+        password: password,
+      },
+    })
       .then((response) => {
         console.log(response);
       })
       .catch((e) => console.log('error in signin', e));
   };
+
+  //   await axios
+  //     .post('http://localhost:4000/users/signUp', {
+  //       userId: email,
+  //       password: hashedPassword,
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((e) => console.log('error in signin', e));
+  // };
 
   return (
     <div>

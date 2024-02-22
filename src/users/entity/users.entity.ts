@@ -1,13 +1,14 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UsersModel {
   @PrimaryGeneratedColumn()
-  @IsNumber()
-  id: number;
+  // @IsNumber()
+  id: string;
 
   @Column()
+  @IsEmail({}, { message: 'Invalid email message' })
   @IsString()
   email: string;
 
