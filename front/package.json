@@ -10,11 +10,13 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "bcryptjs-react": "^2.4.6",
+    "jwt-decode": "^4.0.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
+    "universal-cookie": "^7.1.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

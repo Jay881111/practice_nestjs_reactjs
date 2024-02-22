@@ -79,7 +79,6 @@ export class AuthService {
   }
 
   loginUser(user: Pick<UsersModel, 'email' | 'id'>) {
-    console.log('loginuser', user);
     return {
       accessToken: this.signToken(user, false),
       refreshToken: this.signToken(user, true),

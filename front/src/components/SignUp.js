@@ -1,9 +1,14 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 function SignUp() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const createAccount = async (e) => {
     e.preventDefault();
@@ -20,20 +25,16 @@ function SignUp() {
     })
       .then((response) => {
         console.log(response);
+        console.log(response.data.accessToken);
+        const decoded = jwtDecode(response.data.accessToken);
+        console.log(decoded);
+        cookies.set('jwt_authorization', response.data.accessToken, {
+          expires: new Date(decoded.exp * 1000),
+        });
+        navigate('/');
       })
       .catch((e) => console.log('error in signin', e));
   };
-
-  //   await axios
-  //     .post('http://localhost:4000/users/signUp', {
-  //       userId: email,
-  //       password: hashedPassword,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((e) => console.log('error in signin', e));
-  // };
 
   return (
     <div>
