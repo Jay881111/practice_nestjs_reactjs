@@ -1,4 +1,4 @@
-import { jwtDecode } from 'jwt-decode';
+import { InvalidTokenError, jwtDecode } from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -6,22 +6,51 @@ import Cookies from 'universal-cookie';
 
 function Main() {
   const [user, setUser] = useState(null);
+  // const [cookies, setCookies] = useState(new Cookies());
+
+  const cookies = new Cookies();
+  // cookies가 없을 경우 때문에 에러 나는중
+
+  const token = cookies.cookies.jwt_authorization;
+
   useEffect(() => {
-    const cookies = new Cookies();
-    const codedCookie = cookies.cookies.jwt_authorization;
-    const decoded = jwtDecode(codedCookie);
-    setUser(decoded);
+    if (typeof token !== 'string') {
+      // throw new InvalidTokenError('토큰이 틀린형식입니다');
+    } else if (!token) {
+      // throw new InvalidTokenError('토큰이 없습니다');
+    } else {
+      const codedCookie = cookies.cookies.jwt_authorization;
+      const decoded = jwtDecode(codedCookie);
+      setUser(decoded);
+    }
   }, []);
+
+  const logOut = () => {
+    setUser(null);
+    cookies.remove('jwt_authorization');
+  };
 
   return (
     <div>
-      {user ? <div>안녕하세요, {user.email}</div> : null}
+      {user ? (
+        <div>
+          <div>
+            안녕하세요, {user.email}
+            <Link to="/userdetail">내정보</Link>
+          </div>
+
+          <button onClick={logOut}>logout</button>
+        </div>
+      ) : (
+        <span>
+          <Link to="/signup">회원가입</Link>
+          <Link to="/login">로그인</Link>
+        </span>
+      )}
 
       <Link to="/students">학생목록</Link>
       <Link to="/process">과정진행도</Link>
       <Link to="/lectures">강의목록</Link>
-      <Link to="/signup">회원가입</Link>
-      <Link to="/login">로그인</Link>
     </div>
   );
 }

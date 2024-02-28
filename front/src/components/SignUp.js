@@ -27,7 +27,7 @@ function SignUp() {
         console.log(response);
         console.log(response.data.accessToken);
         const decoded = jwtDecode(response.data.accessToken);
-        console.log(decoded);
+        console.log('decoded', decoded);
         cookies.set('jwt_authorization', response.data.accessToken, {
           expires: new Date(decoded.exp * 1000),
         });

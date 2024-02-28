@@ -7,6 +7,7 @@ import Process from './components/Process';
 import Lectures from './components/Lectures';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import UserDetail from './components/UserDetail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/process" element={<Process />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/userdetail" element={<UserDetail />} />
       </Routes>
       {/* <Author /> */}
     </div>

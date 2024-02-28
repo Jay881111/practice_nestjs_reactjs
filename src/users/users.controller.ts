@@ -7,7 +7,7 @@ export class UsersController {
 
   @Post('signUp')
   signUpUser(
-    @Body('id') id: number,
+    @Body('id') id: string,
     @Body('userId') userId: string,
     @Body('password') password: string,
   ) {

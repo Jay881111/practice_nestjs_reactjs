@@ -4,7 +4,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class UsersModel {
   @PrimaryGeneratedColumn()
-  // @IsNumber()
   id: string;
 
   @Column()

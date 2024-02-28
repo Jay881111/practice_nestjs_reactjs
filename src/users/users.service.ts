@@ -10,7 +10,7 @@ export class UsersService {
     private readonly usersRepository: Repository<UsersModel>,
   ) {}
 
-  async signUp(id: number, email: string, password: string) {
+  async signUp(id: string, email: string, password: string) {
     const user = this.usersRepository.create({ id, email, password });
     console.log('signup', user);
     const newUser = await this.usersRepository.save(user);
