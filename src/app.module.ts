@@ -15,6 +15,7 @@ import {
   ENV_DB_PORT_KEY,
   ENV_DB_USERNAME_KEY,
 } from './common/const/env-keys.const';
+import { LecturesModule } from './lectures/lectures.module';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import {
       username: process.env[ENV_DB_USERNAME_KEY],
       password: process.env[ENV_DB_PASSWORD_KEY],
       database: process.env[ENV_DB_DATABASE_KEY],
-      entities: [PostsModule, UsersModule, AuthModule],
+      entities: [PostsModule, UsersModule, AuthModule, LecturesModule],
       synchronize: true,
       autoLoadEntities: true,
       // 사용하지 않을 경우 관련오류 ->  No metadata for * was found
@@ -36,6 +37,7 @@ import {
     StudentsModule,
     UsersModule,
     AuthModule,
+    LecturesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

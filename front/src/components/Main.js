@@ -1,7 +1,8 @@
-import { InvalidTokenError, jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import UserDetail from './UserDetail';
 // 로그인 기능
 
 function Main() {
@@ -47,10 +48,16 @@ function Main() {
           <Link to="/login">로그인</Link>
         </span>
       )}
-
-      <Link to="/students">학생목록</Link>
-      <Link to="/process">과정진행도</Link>
-      <Link to="/lectures">강의목록</Link>
+      <div>
+        <Link to="/students">학생목록</Link>
+      </div>
+      <div>
+        <Link to="/process">과정진행도</Link>
+      </div>
+      <div>
+        <Link to="/lectures">강의목록</Link>
+      </div>
+      <Link to="/createlectures">강의만들기</Link>
     </div>
   );
 }

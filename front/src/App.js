@@ -8,6 +8,7 @@ import Lectures from './components/Lectures';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import UserDetail from './components/UserDetail';
+import CreateLectures from './components/CreateLectures';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/userdetail" element={<UserDetail />} />
+        <Route path="/createlectures" element={<CreateLectures />} />
       </Routes>
       {/* <Author /> */}
     </div>

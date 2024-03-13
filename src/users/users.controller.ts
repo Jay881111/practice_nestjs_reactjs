@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -17,5 +17,10 @@ export class UsersController {
   @Get()
   findUsers() {
     return this.usersService.findUser();
+  }
+
+  @Put('/modifyName')
+  changeName() {
+    return this.usersService;
   }
 }
